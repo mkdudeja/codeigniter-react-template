@@ -1,0 +1,35 @@
+@import '../../../../assets/styles/variables';
+
+.app-header {
+    position: fixed;
+    z-index: 1;
+    width: 100%;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    place-content: center space-between;
+
+    .logo {
+        flex: 1 1 100%;
+        max-width: 120px;
+        height: 31px;
+        background: rgba(255, 255, 255, 0.2);
+        margin: 16px 24px 16px 0;
+    }
+
+    .ant-menu {
+        flex: 1 1 100%;
+        max-width: 65%;
+        display: flex;
+        flex-direction: row;
+        place-content: center flex-end;
+        align-items: center;
+        justify-content: flex-end;
+
+        @media screen and (max-width: 991px) {
+            max-width: 6rem;
+        }
+    }
+}

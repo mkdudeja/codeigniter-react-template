@@ -1,0 +1,33 @@
+html,
+body {
+    font-size: 10px;
+    font-family: $fontRegular;
+}
+
+body {
+    color: #1c1e21;
+    line-height: 1.5;
+}
+
+img {
+    max-width: 100%;
+}
+
+.wrapper {
+    .container {
+        padding: 0 2rem;
+    }
+
+    .main {
+        margin-top: 6.4rem;
+    }
+}
+
+// antd overrides
+.ant-layout {
+    background-color: $white;
+}
+
+.ant-layout-header {
+    padding: 0 2rem;
+}
