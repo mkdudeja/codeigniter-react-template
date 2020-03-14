@@ -1,21 +1,18 @@
 import { ActionsObservable, ofType } from 'redux-observable';
 import { mergeMap, map } from 'rxjs/operators';
 
-import { LoginActions } from '../actions';
-import { LoginActionTypes } from '../types';
+import { accountLoginActions } from '../actions';
+import { accountLoginConstants } from '../constants';
 import { authService } from '../../shared';
+
 import { ILoginResponse } from '../../interfaces';
 
-const accountLoginEpic = (action$: ActionsObservable<LoginActionTypes.Actions>) => action$.pipe(
-    ofType<LoginActionTypes.Actions, LoginActionTypes.ILoginAction>(LoginActionTypes.Types.USER_LOGIN),
-    mergeMap((action: LoginActionTypes.ILoginAction) =>
+export default (action$: ActionsObservable<accountLoginConstants.Actions>) => action$.pipe(
+    ofType<accountLoginConstants.Actions, accountLoginConstants.ILoginAction>(accountLoginConstants.Types.USER_LOGIN),
+    mergeMap((action: accountLoginConstants.ILoginAction) =>
         authService.login(action.payload.email, action.payload.password)
             .pipe(
-                map((result: ILoginResponse) => LoginActions.loginSuccessAction(result))
+                map((result: ILoginResponse) => accountLoginActions.loginSuccessAction(result))
             )
     )
 );
-
-export default [
-    accountLoginEpic
-];

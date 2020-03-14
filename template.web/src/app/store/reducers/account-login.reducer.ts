@@ -1,4 +1,4 @@
-import { LoginActionTypes } from "../types";
+import { accountLoginConstants } from "../constants";
 import { ILoginResponse } from "../../interfaces";
 
 const initialState: ILoginResponse = {
@@ -6,9 +6,9 @@ const initialState: ILoginResponse = {
     userInfo: null
 };
 
-export default (state: ILoginResponse = initialState, action: LoginActionTypes.Actions): ILoginResponse => {
+export default (state: ILoginResponse = initialState, action: accountLoginConstants.Actions): ILoginResponse => {
     switch (action.type) {
-        case LoginActionTypes.Types.USER_LOGIN_SUCCESS:
+        case accountLoginConstants.Types.USER_LOGIN_SUCCESS:
             return {
                 ...state,
                 accessToken: action.payload.accessToken,

@@ -5,16 +5,16 @@ import { Layout } from 'antd';
 import './login.scss';
 
 import { IUserLogin } from '../interfaces';
-import { LoginActions } from '../store/actions';
+import { accountLoginActions } from '../store/actions';
 
 const { Content } = Layout;
 
 // react-redux initialization
 const mapDispatchToProps = {
-    userLogin: (payload: IUserLogin) => LoginActions.loginAction(payload)
+    userLogin: (payload: IUserLogin) => accountLoginActions.loginAction(payload)
 }
 
-const payload: IUserLogin = { email: 'test@test.com', password: '123456re' };
+const payload: IUserLogin = { email: 'test@test.com', password: '1234' };
 const connector = connect(null, mapDispatchToProps);
 
 type PropsFromRedux = ConnectedProps<typeof connector>;

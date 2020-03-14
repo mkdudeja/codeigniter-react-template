@@ -5,6 +5,7 @@ class AppStorageTypes {
 
 class AppKeys {
     user = 'userInfo';
+    state = 'state';
     token = 'accessToken';
     storageType = 'sessionStorage';
 }

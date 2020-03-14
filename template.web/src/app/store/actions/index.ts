@@ -1,5 +1,5 @@
-import * as LoginActions from './account-login.action';
+import * as accountLoginActions from './account-login.action';
 
 export {
-    LoginActions
+    accountLoginActions
 }
