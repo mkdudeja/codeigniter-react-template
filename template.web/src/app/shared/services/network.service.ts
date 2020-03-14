@@ -1,7 +1,10 @@
 import axios, { AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios';
 import { toast } from 'react-toastify';
+import { Observable, Subscriber } from 'rxjs';
+
 import { tokenService } from './token.service';
 import { setupProgressBar } from '../interceptors';
+
 import { ErrorModel } from '../../models';
 import { IError } from '../../interfaces';
 
@@ -20,7 +23,7 @@ class NetworkService {
         return NetworkService._instance;
     }
 
-    get<T>(url: string, params: any = null, config: AxiosRequestConfig = {}): Promise<T> {
+    get<T>(url: string, params: any = null, config: AxiosRequestConfig = {}): Observable<T> {
         const axiosConfig = this._prepareRequest(url, config);
         axiosConfig.method = 'GET';
         if (params !== null) {
@@ -29,21 +32,21 @@ class NetworkService {
         return this._getResponse<T>(axiosConfig);
     }
 
-    post<T>(url: string, data: any, config: AxiosRequestConfig = {}): Promise<T> {
+    post<T>(url: string, data: any, config: AxiosRequestConfig = {}): Observable<T> {
         const axiosConfig = this._prepareRequest(url, config);
         axiosConfig.method = 'POST';
         axiosConfig.data = data;
         return this._getResponse<T>(axiosConfig);
     }
 
-    put<T>(url: string, data: any, config: AxiosRequestConfig = {}): Promise<T> {
+    put<T>(url: string, data: any, config: AxiosRequestConfig = {}): Observable<T> {
         const axiosConfig = this._prepareRequest(url, config);
         axiosConfig.method = 'PUT';
         axiosConfig.data = data;
         return this._getResponse<T>(axiosConfig);
     }
 
-    delete<T>(url: string, params: any = null, config: AxiosRequestConfig = {}): Promise<T> {
+    delete<T>(url: string, params: any = null, config: AxiosRequestConfig = {}): Observable<T> {
         const axiosConfig = this._prepareRequest(url, config);
         axiosConfig.method = 'DELETE';
         if (params !== null) {
@@ -68,17 +71,21 @@ class NetworkService {
         return axiosConfig;
     }
 
-    private _getResponse<T>(config: AxiosRequestConfig): Promise<T> {
-        return axios(config)
-            .then((response: AxiosResponse<T>) => {
-                return response.data;
-            })
-            .catch((axiosError: AxiosError) => {
-                // handle the response error
-                const error: IError = this._parseError(axiosError);
-                toast.error(error.message);
-                return Promise.reject(error);
-            });
+    private _getResponse<T>(config: AxiosRequestConfig): Observable<T> {
+        return new Observable<T>((observer: Subscriber<T>) => {
+            axios(config)
+                .then((response: AxiosResponse<T>) => {
+                    observer.next(response.data);
+                    observer.complete();
+                })
+                .catch((axiosError: AxiosError) => {
+                    // handle the response error
+                    const error: IError = this._parseError(axiosError);
+                    toast.error(error.message);
+                    observer.error(error);
+                });
+        });
+
     }
 
     private _parseError(error: AxiosError) {

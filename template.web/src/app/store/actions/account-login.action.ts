@@ -1,5 +1,5 @@
 import { LoginActionTypes } from '../types';
-import { IUserLogin, IUserInfo } from '../../interfaces';
+import { IUserLogin, ILoginResponse } from '../../interfaces';
 
 // action creators
 export const loginAction = (payload: IUserLogin): LoginActionTypes.ILoginAction => ({
@@ -7,6 +7,7 @@ export const loginAction = (payload: IUserLogin): LoginActionTypes.ILoginAction 
     payload
 });
 
-export const loginSuccessAction = (payload: IUserInfo): LoginActionTypes.ILoginSuccessAction => ({
-    type: LoginActionTypes.Types.USER_LOGIN_SUCCESS, payload
+export const loginSuccessAction = (payload: ILoginResponse): LoginActionTypes.ILoginSuccessAction => ({
+    type: LoginActionTypes.Types.USER_LOGIN_SUCCESS,
+    payload
 });

@@ -11,7 +11,7 @@ class AppKeys {
 
 class AppUrls {
     baseUrl = ''
-    login = `http://demo9702050.mockable.io/login`;
+    login = `http://localhost/hackathon/hackathon.api/index.php/Account/login`;
 }
 
 /**

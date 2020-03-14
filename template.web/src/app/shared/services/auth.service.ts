@@ -1,3 +1,6 @@
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+
 import { appConstants } from '../config';
 import { networkService } from './network.service';
 import { ILoginResponse, IUserInfo } from '../../interfaces';
@@ -22,16 +25,18 @@ class AuthService {
         return this.token;
     }
 
-    login(username: string, password: string): Promise<ILoginResponse> {
+    login(email: string, password: string): Observable<ILoginResponse> {
         const data = {
-            username, password
+            email, password
         };
         return networkService.post<ILoginResponse>(appConstants.urls.login, data)
-            .then((response: ILoginResponse) => {
-                this.token = response.token;
-                this.userInfo = response.userInfo;
-                return response;
-            });
+            .pipe(
+                map((response: ILoginResponse) => {
+                    this.token = response.accessToken;
+                    this.userInfo = response.userInfo;
+                    return response;
+                })
+            );
     }
 }
 

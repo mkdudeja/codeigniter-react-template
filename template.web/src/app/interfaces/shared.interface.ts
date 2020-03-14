@@ -1,11 +1,10 @@
-import { Action } from "redux";
+import { IUserInfo, ILoginResponse } from "./account-login.interface";
 
 export interface IError {
     status: (null | number);
     message: string
 }
 
-export interface IGenericAction {
-    type: any;
-    payload: any;
+export interface IAppState {
+    loginState: ILoginResponse
 }

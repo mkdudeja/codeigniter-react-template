@@ -1,11 +1,24 @@
 import React from 'react';
+import { connect, ConnectedProps } from 'react-redux';
 import { Layout, Menu } from 'antd/es';
 import { Link } from 'react-router-dom';
 import './header.scss';
+import { IAppState } from '../../../interfaces';
 
 const { Header } = Layout;
 
-const AppHeader: React.FC = () => {
+// react-redux initialazation
+const mapStateToProps = (store: IAppState) => ({
+    userInfo: store.loginState.userInfo
+});
+const connector = connect(mapStateToProps);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+type Props = PropsFromRedux;
+
+// react component
+const AppHeader: React.FC<Props> = (props: Props) => {
+    console.log('props', props);
     return (
         <Header className="app-header">
             <div className="logo" />
@@ -34,4 +47,5 @@ const AppHeader: React.FC = () => {
     );
 }
 
-export default AppHeader;
+// export component
+export default connector(AppHeader);

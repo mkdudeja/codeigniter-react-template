@@ -1,6 +1,6 @@
 import { Action } from "redux";
 
-import { IUserLogin, IUserInfo, IError } from "../../interfaces";
+import { IUserLogin, ILoginResponse, IError } from "../../interfaces";
 
 export enum Types {
     USER_LOGIN = 'USER_LOGIN',
@@ -16,7 +16,7 @@ export interface ILoginAction extends Action {
 
 export interface ILoginSuccessAction extends Action {
     type: typeof Types.USER_LOGIN_SUCCESS
-    payload: IUserInfo
+    payload: ILoginResponse
 }
 
 export interface ILoginFailureAction extends Action {

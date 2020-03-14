@@ -4,12 +4,12 @@ export interface IUserInfo {
     roles: Array<string>;
 }
 
-export interface ILoginResponse {
-    token: string;
-    userInfo: IUserInfo;
-}
-
 export interface IUserLogin {
     email: string;
     password: string;
 }
+
+export interface ILoginResponse {
+    accessToken: string;
+    userInfo: IUserInfo;
+};

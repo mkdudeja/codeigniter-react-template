@@ -1,17 +1,17 @@
-import { ofType, ActionsObservable } from 'redux-observable';
-import { ajax, AjaxResponse } from 'rxjs/ajax';
+import { ActionsObservable, ofType } from 'redux-observable';
 import { mergeMap, map } from 'rxjs/operators';
 
 import { LoginActions } from '../actions';
 import { LoginActionTypes } from '../types';
-import { IUserInfo } from '../../interfaces';
+import { authService } from '../../shared';
+import { ILoginResponse } from '../../interfaces';
 
 const accountLoginEpic = (action$: ActionsObservable<LoginActionTypes.Actions>) => action$.pipe(
-    ofType(LoginActionTypes.Types.USER_LOGIN),
-    mergeMap((action: LoginActionTypes.Actions) =>
-        ajax.getJSON<AjaxResponse>(`https://api.github.com/users/${action.payload}`)
+    ofType<LoginActionTypes.Actions, LoginActionTypes.ILoginAction>(LoginActionTypes.Types.USER_LOGIN),
+    mergeMap((action: LoginActionTypes.ILoginAction) =>
+        authService.login(action.payload.email, action.payload.password)
             .pipe(
-                map((result: AjaxResponse) => LoginActions.loginSuccessAction(result.response as IUserInfo))
+                map((result: ILoginResponse) => LoginActions.loginSuccessAction(result))
             )
     )
 );
